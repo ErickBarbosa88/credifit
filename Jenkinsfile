@@ -27,16 +27,7 @@ pipeline {
 
     post {
         always {
-            // Corrigido o bloco de publicação HTML
-            publishHTML(
-                allowMissing: false,
-                alwaysLinkToLastBuild: false,
-                keepAll: true,
-                reportDir: 'cypress/report',
-                reportFiles: 'index.html',
-                reportName: 'HTML Report',
-                reportTitles: ''
-            )
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'cypress/report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
