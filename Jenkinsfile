@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     options {
         ansiColor('xterm')
     }
@@ -19,7 +19,7 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm i"
-                bat "npx cypress run --browser ${params.BROWSER} --spec ${params.SPEC}"
+                bat "npm run cy:run --browser ${params.BROWSER} --spec ${params.SPEC}"
             }
         }
         stage('Deploying') {
