@@ -6,15 +6,10 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge'], description: "Choose the browser where you want to execute your scripts")
     }
 
-    options {
-        ansiColor('xterm')
-    }
-
     stages {
         stage('Building') {
             steps {
                 echo "Building the application"
-                // Coloque aqui os comandos reais de construção, se necessário
             }
         }
         stage('Testing') {
@@ -26,7 +21,6 @@ pipeline {
         stage('Deploying') {
             steps {
                 echo "Deploying the application"
-                // Coloque aqui os comandos reais de implantação, se necessário
             }
         }
     }
@@ -40,7 +34,6 @@ pipeline {
                 
                 if (fileExists(reportFile)) {
                     echo "HTML report file exists: ${reportFile}"
-                    // Copia manualmente o diretório para verificar permissões e caminhos
                     bat "mkdir -p ${targetDir}"
                     bat "xcopy ${reportDir} ${targetDir} /E /I /Y"
                 } else {
