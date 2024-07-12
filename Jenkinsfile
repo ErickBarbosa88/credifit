@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    options {
-        ansiColor('xterm')
-    }
-
     parameters {
         string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the path of the scripts you want to execute")
         choice(name: 'BROWSER', choices: ['chrome', 'edge'], description: "Choose the browser where you want to execute your scripts")
