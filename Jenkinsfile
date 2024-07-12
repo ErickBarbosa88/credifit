@@ -14,8 +14,30 @@ pipeline {
         }
         stage('Testing') {
             steps {
-                bat "npm i"
-                bat "npx cypress run --browser ${params.BROWSER} --spec ${params.SPEC}"
+                script {
+                    try {
+                        bat "npm i"
+                        bat "npx cypress run --browser ${params.BROWSER} --spec ${params.SPEC}"
+                    } catch (Exception e) {
+                        error "Failed to run Cypress tests: ${e}"
+                    }
+                }
+            }
+        }
+        stage('Verifying Report') {
+            steps {
+                script {
+                    def reportDir = 'cypress/report'
+                    def reportFile = "${reportDir}/index.html"
+                    
+                    bat "dir ${reportDir} /b"
+                    
+                    if (fileExists(reportFile)) {
+                        echo "HTML report file exists: ${reportFile}"
+                    } else {
+                        error "HTML report file does not exist: ${reportFile}"
+                    }
+                }
             }
         }
         stage('Deploying') {
@@ -34,7 +56,7 @@ pipeline {
                 
                 if (fileExists(reportFile)) {
                     echo "HTML report file exists: ${reportFile}"
-                    bat "mkdir -p ${targetDir}"
+                    bat "mkdir ${targetDir}"
                     bat "xcopy ${reportDir} ${targetDir} /E /I /Y"
                 } else {
                     error "HTML report file does not exist: ${reportFile}"
