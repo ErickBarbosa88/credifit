@@ -6,7 +6,6 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge'], description: "Choose the browser where you want to execute your scripts")
     }
 
-
     stages {
         stage('Building') {
             steps {
@@ -28,10 +27,7 @@ pipeline {
         stage('Verifying Report') {
             steps {
                 script {
-                    def reportDir = 'cypress/report'
-                    def reportFile = "${reportDir}/index.html"
-                    
-                    bat "dir ${reportDir} /b"
+                    def reportFile = 'cypress/report/index.html'
                     
                     if (fileExists(reportFile)) {
                         echo "HTML report file exists: ${reportFile}"
@@ -57,8 +53,8 @@ pipeline {
                 
                 if (fileExists(reportFile)) {
                     echo "HTML report file exists: ${reportFile}"
-                    bat "powershell New-Item -ItemType Directory -Force -Path ${targetDir}"
-                    bat "powershell Copy-Item -Path ${reportDir}\\* -Destination ${targetDir} -Recurse -Force"
+                    bat "powershell New-Item -ItemType Directory -Force -Path '${targetDir}'"
+                    bat "powershell Copy-Item -Path '${reportDir}\\*' -Destination '${targetDir}' -Recurse -Force"
                 } else {
                     error "HTML report file does not exist: ${reportFile}"
                 }

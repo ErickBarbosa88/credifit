@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "cy:run": "cypress run --headless"
+    "cy:run": "cypress run --headless"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-mochawesome-reporter": "^3.8.2",
     "cypress-wait-until": "^3.0.1"
   },
   "cypress-cucumber-preprocessor": {
