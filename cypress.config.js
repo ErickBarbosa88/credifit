@@ -12,7 +12,7 @@ module.exports = defineConfig({
     reportPageTitle: 'Report Testes',
     charts: true,
     embeddedScreenshots: true,
-    reportDir: "cypress/reports",
+    reportDir: "cypress/report",
     overwrite: true,
   },
   e2e: {
