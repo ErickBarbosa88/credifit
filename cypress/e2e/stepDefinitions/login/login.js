@@ -51,7 +51,7 @@ describe('Validar Login', () => {
 
     When("I type a invalid email", () => {
       const password = Cypress.env('PASSWORD');
-      cy.get('#login_form_email').clear()
+      cy.get('#login_form_email').clear();
       cy.get('#login_form_email').type("EmailInvalido");
       cy.get('#login_form_password').type(password);
     });
@@ -64,6 +64,20 @@ describe('Validar Login', () => {
       cy.get('.ant-form-explain').should('be.visible');
     });
 
+    When("I don't type password", () => {
+      const email = Cypress.env('EMAIL');
+      cy.get('#login_form_email').clear();
+      cy.get('#login_form_password').clear();
+      cy.get('#login_form_email').type(email);
+    });
+
+    And("Click on button Entrar", () => {
+      cy.get('.ant-btn').click();
+    });
+
+    Then("An invalid password message is displayed", () => {
+      cy.get(".ant-form-explain").should('be.visible')
+    })
     
   });
   

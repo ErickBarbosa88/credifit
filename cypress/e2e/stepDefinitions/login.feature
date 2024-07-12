@@ -14,5 +14,10 @@ Then Error alert is displayed
 When I type a invalid email
 And Click on button Entrar
 Then An invalid email message is displayed
+When I don't type password
+And Click on button Entrar
+Then An invalid password message is displayed
+
+
 
 
