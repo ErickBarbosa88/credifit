@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    
+    options {
+        ansiColor('xterm')
+    }
 
     parameters {
         string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Enter the path of the scripts you want to execute")

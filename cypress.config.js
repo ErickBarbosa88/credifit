@@ -1,6 +1,6 @@
 const cucumber =require('cypress-cucumber-preprocessor').default
 const { defineConfig } = require("Cypress")
-require('dotenv').config();;
+require('dotenv').config();
 
 module.exports = defineConfig({
   env: {
@@ -9,10 +9,13 @@ module.exports = defineConfig({
   },
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
-    reportDir: 'cypress/report',
+    reportPageTitle: 'Report Testes',
     charts: true,
-    reportPageTitle: 'Cypress Reports',
     embeddedScreenshots: true,
+    reportDir: "cypress/reports",
+    overwrite: false,
+    html: true,
+    json: true,
   },
   e2e: {
     pageLoadTimeout: 10000,
