@@ -6,6 +6,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge'], description: "Choose the browser where you want to execute your scripts")
     }
 
+
     stages {
         stage('Building') {
             steps {
@@ -56,8 +57,8 @@ pipeline {
                 
                 if (fileExists(reportFile)) {
                     echo "HTML report file exists: ${reportFile}"
-                    bat "mkdir ${targetDir}"
-                    bat "xcopy ${reportDir} ${targetDir} /E /I /Y"
+                    bat "powershell New-Item -ItemType Directory -Force -Path ${targetDir}"
+                    bat "powershell Copy-Item -Path ${reportDir}\\* -Destination ${targetDir} -Recurse -Force"
                 } else {
                     error "HTML report file does not exist: ${reportFile}"
                 }
