@@ -9,11 +9,10 @@ module.exports = defineConfig({
   },
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
+    reportDir: 'cypress/report',
     charts: true,
-    reportPageTitle: 'custom-title',
+    reportPageTitle: 'Cypress Reports',
     embeddedScreenshots: true,
-    inlineAssets: true,
-    saveAllAttempts: false,
   },
   e2e: {
     pageLoadTimeout: 10000,
