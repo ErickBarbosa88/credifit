@@ -1,84 +1,78 @@
 import { Given, Then, When, And } from "cypress-cucumber-preprocessor/steps";
 import loginPage from "../../../support/pages/loginPage";
-import 'cypress-wait-until';
+import "cypress-wait-until";
 
+const email = Cypress.env("EMAIL");
 
-
-describe('Validar Login', () => {
-    Given("I'm on the login page", () => {
-      loginPage.accessLoginPage();
-      cy.get(".loginImage___3R-uX").should("be.visible");
-    });
-  
-    When("I insert a registered my email and password", () => {
-      const email = Cypress.env('EMAIL');
-      const password = Cypress.env('PASSWORD');
-      cy.get('#login_form_email').type(email);
-      cy.get('#login_form_password').type(password);
-    });
-  
-    And("Click on button Entrar", () => {
-      cy.get('.ant-btn').click();
-    });
-  
-    
-    Then("Login successfully", () => {
-      cy.get('.ant-avatar').should('be.visible');
-    });
-    
+describe("Validar Login", () => {
+  Given("I'm on the login page", () => {
+    loginPage.accessLoginPage();
+    loginPage.loginImage().should("be.visible");
+    cy.url().should("include", "/login");
   });
 
-  describe('Validar Campos Login', () => {
-    Given("I'm on the login page", () => {
-      loginPage.accessLoginPage();
-      cy.get(".loginImage___3R-uX").should("be.visible");
-    });
-  
-    When("I enter the wrong email or password", () => {
-      const password = Cypress.env('PASSWORD');
-      cy.get('#login_form_email').type("EMAIL@aleatorio.com");
-      cy.get('#login_form_password').type(password);
-    });
-  
-    And("Click on button Entrar", () => {
-      cy.get('.ant-btn').click();
-    });
-  
-    
-    Then("Error alert is displayed", () => {
-      cy.get('.ant-alert').should('be.visible');
-    });
-
-    When("I type a invalid email", () => {
-      const password = Cypress.env('PASSWORD');
-      cy.get('#login_form_email').clear();
-      cy.get('#login_form_email').type("EmailInvalido");
-      cy.get('#login_form_password').type(password);
-    });
-
-    And("Click on button Entrar", () => {
-      cy.get('.ant-btn').click();
-    });
-
-    Then("An invalid email message is displayed", () => {
-      cy.get('.ant-form-explain').should('be.visible');
-    });
-
-    When("I don't type password", () => {
-      const email = Cypress.env('EMAIL');
-      cy.get('#login_form_email').clear();
-      cy.get('#login_form_password').clear();
-      cy.get('#login_form_email').type(email);
-    });
-
-    And("Click on button Entrar", () => {
-      cy.get('.ant-btn').click();
-    });
-
-    Then("An invalid password message is displayed", () => {
-      cy.get(".ant-form-explain").should('be.visible')
-    })
-    
+  When("I insert a registered my email and password", () => {
+    const email = Cypress.env("EMAIL");
+    const password = Cypress.env("PASSWORD");
+    loginPage.emailInput().type(email);
+    loginPage.passwordInput().type(password);
   });
-  
-  
+
+  And("Click on button Entrar", () => {
+    loginPage.btnEnter().click();
+  });
+
+  Then("Login successfully", () => {
+    loginPage.userAvatar().should("be.visible");
+  });
+});
+
+describe("Validar Campos Login", () => {
+  Given("I'm on the login page", () => {
+    loginPage.accessLoginPage();
+    loginPage.loginImage().should("be.visible");
+  });
+
+  When("I enter the wrong email or password", () => {
+    const password = Cypress.env("PASSWORD");
+    loginPage.emailInput().type("EMAIL@aleatorio.com");
+    loginPage.passwordInput().type(password);
+  });
+
+  And("Click on button Entrar", () => {
+    loginPage.btnEnter().click();
+  });
+
+  Then("Error alert is displayed", () => {
+    loginPage.loginWrongMessage().should("be.visible");
+  });
+
+  When("I type a invalid email", () => {
+    const password = Cypress.env("PASSWORD");
+    loginPage.emailInput().clear();
+    loginPage.emailInput().type("EmailInvalido");
+    loginPage.passwordInput().type(password);
+  });
+
+  And("Click on button Entrar", () => {
+    loginPage.btnEnter().click();
+  });
+
+  Then("An invalid email message is displayed", () => {
+    loginPage.invalidMessage().should("be.visible");
+  });
+
+  When("I don't type password", () => {
+    loginPage.emailInput().clear();
+    loginPage.passwordInput().clear();
+    loginPage.emailInput().type(email);
+  });
+
+  And("Click on button Entrar", () => {
+    loginPage.btnEnter().click();
+  });
+
+  Then("An invalid password message is displayed", () => {
+    loginPage.invalidMessage().should("be.visible");
+  });
+});
